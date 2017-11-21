@@ -4,13 +4,18 @@
  */
 package tabletennisscores;
 
+import tabletennisscores.Match.MatchManager;
+import tabletennisscores.Team.TeamManager;
+
 import java.util.Scanner;
-import javax.swing.JOptionPane;
 
 /**
  * @author jin
  */
 public class TTScoreGUI1 extends javax.swing.JFrame {
+
+    private TeamManager teamManager = TeamManager.getInstance();
+    private MatchManager matchManager = MatchManager.getInstance();
 
     /**
      * Creates new form TTScoreGUI1
