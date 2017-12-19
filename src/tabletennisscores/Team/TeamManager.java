@@ -25,6 +25,18 @@ public class TeamManager {
         return registeredTeams;
     }
 
+    public boolean isTeamRegistered(String teamName){
+        boolean exists = false;
+
+        for(Team team : registeredTeams){
+            if(team.getTeamName().equals(teamName)){
+                exists = true;
+            }
+        }
+
+        return exists;
+    }
+
     public Team getTeam(String teamName){
         for(Team team : registeredTeams){
             if(team.getTeamName().equals(teamName)){

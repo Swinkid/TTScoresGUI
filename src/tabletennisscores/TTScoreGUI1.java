@@ -4,7 +4,7 @@
  */
 package tabletennisscores;
 
-import tabletennisscores.Match.MatchManager;
+import tabletennisscores.Match.*;
 import tabletennisscores.Team.Player;
 import tabletennisscores.Team.Team;
 import tabletennisscores.Team.TeamManager;
@@ -20,6 +20,8 @@ public class TTScoreGUI1 extends javax.swing.JFrame {
 
     private TeamManager teamManager = TeamManager.getInstance();
     private MatchManager matchManager = MatchManager.getInstance();
+
+    private Match currentMatch;
 
     /**
      * Creates new form TTScoreGUI1
@@ -1356,8 +1358,82 @@ public class TTScoreGUI1 extends javax.swing.JFrame {
     }//GEN-LAST:event_aPlayer1ActionPerformed
 
     private void calScorebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calScorebuttonActionPerformed
-        submitScoreButton.setEnabled(true);
 
+        currentMatch = new Match(teamManager.getTeam(hTeamField.getText()), teamManager.getTeam(aTeamField.getText()));
+
+        Player homePlayer1 = teamManager.getTeam(hTeamField.getText()).findPlayer(hPlayer1.getText());
+        Player homePlayer2 = teamManager.getTeam(hTeamField.getText()).findPlayer(hPlayer2.getText());
+
+        Player awayPlayer1 = teamManager.getTeam(aTeamField.getText()).findPlayer(aPlayer1.getText());
+        Player awayPlayer2 = teamManager.getTeam(aTeamField.getText()).findPlayer(aPlayer2.getText());
+
+
+        int row1Home = 0;
+        int row1Away = 0;
+
+        ArrayList<Game> setGames1 = new ArrayList<>();
+        setGames1.add(new Game(Integer.valueOf(set11ahpts.getText()), Integer.valueOf(set11aapts.getText())));
+        setGames1.add(new Game(Integer.valueOf(set11bhpts.getText()), Integer.valueOf(set11bapts.getText())));
+        setGames1.add(new Game(Integer.valueOf(set11chpts.getText()), Integer.valueOf(set11capts.getText())));
+        SingleSet set1 = new SingleSet(setGames1, homePlayer1, awayPlayer1);
+        currentMatch.addSet(set1);
+
+        if(set1.getHomeScore() > set1.getAwayScore()){
+            row1Home++;
+        } else {
+            row1Away++;
+        }
+
+        ArrayList<Game> setGames2 = new ArrayList<>();
+        setGames2.add(new Game(Integer.valueOf(set12ahpts.getText()),Integer.valueOf(set12aapts.getText())));
+        setGames2.add(new Game(Integer.valueOf(set12bhpts.getText()),Integer.valueOf(set12bapts.getText())));
+        setGames2.add(new Game(Integer.valueOf(set12chpts.getText()),Integer.valueOf(set12capts.getText())));
+        SingleSet set2 = new SingleSet(setGames2, homePlayer1, awayPlayer2);
+        currentMatch.addSet(set2);
+
+        if(set2.getHomeScore() > set2.getAwayScore()){
+            row1Home++;
+        } else {
+            row1Away++;
+        }
+
+        hWinRow1.setText(String.valueOf(row1Home));
+        aWinRow1.setText(String.valueOf(row1Away));
+
+
+
+
+        ArrayList<Game> set3 = new ArrayList<>();
+        set3.add(new Game(Integer.valueOf(set21ahpts.getText()),Integer.valueOf(set21aapts.getText())));
+        set3.add(new Game(Integer.valueOf(set21bhpts.getText()),Integer.valueOf(set21bapts.getText())));
+        set3.add(new Game(Integer.valueOf(set21chpts.getText()),Integer.valueOf(set21capts.getText())));
+        currentMatch.addSet(new SingleSet(set3, homePlayer2, awayPlayer1));
+
+        ArrayList<Game> set4 = new ArrayList<>();
+        set4.add(new Game(Integer.valueOf(set22ahpts.getText()),Integer.valueOf(set22aapts.getText())));
+        set4.add(new Game(Integer.valueOf(set22bhpts.getText()),Integer.valueOf(set22bapts.getText())));
+        set4.add(new Game(Integer.valueOf(set22chpts.getText()),Integer.valueOf(set22capts.getText())));
+        currentMatch.addSet(new SingleSet(set4, homePlayer2, awayPlayer2));
+
+
+
+
+
+
+        //Game gameda = new Game(Integer.valueOf(dah.getText()), Integer.valueOf(daa.getText()));
+        //Game gamedb = new Game(Integer.valueOf(dbh.getText()), Integer.valueOf(dba.getText()));
+        //Game gamedc = new Game(Integer.valueOf(dch.getText()), Integer.valueOf(dca.getText()));
+
+
+
+
+
+        //TODO: Do in submit
+        //currentMatch.addSet(new SingleSet(game1, homePlayer1, awayPlayer1));
+
+
+
+        submitScoreButton.setEnabled(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_calScorebuttonActionPerformed
 
@@ -1370,8 +1446,9 @@ public class TTScoreGUI1 extends javax.swing.JFrame {
     }//GEN-LAST:event_dchActionPerformed
 
     private void submitScoreButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitScoreButtonActionPerformed
-
-        // TODO add your handling code here:
+        submitScoreButton.setEnabled(false);
+        calScorebutton.setEnabled(false);
+        matchManager.addMatch(currentMatch);
     }//GEN-LAST:event_submitScoreButtonActionPerformed
 
     private void viewMatchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewMatchButtonActionPerformed
@@ -1404,10 +1481,27 @@ public class TTScoreGUI1 extends javax.swing.JFrame {
 
     private void newMatchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newMatchButtonActionPerformed
 
-        calScorebutton.setEnabled(true);
-
+        if(isTeamValid(hTeamField.getText(), hPlayer1.getText(), hPlayer2.getText()) && isTeamValid(aTeamField.getText(), aPlayer1.getText(), aPlayer2.getText())){
+            calScorebutton.setEnabled(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Invalid Player");
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_newMatchButtonActionPerformed
+
+    private boolean isTeamValid(String team, String playerA, String playerB){
+        boolean ready = true;
+
+        if(!(teamManager.isTeamRegistered(team))){
+            ready = false;
+        } else {
+            if(teamManager.getTeam(team).findPlayer(playerA).equals(null) && teamManager.getTeam(team).findPlayer(playerB).equals(null)){
+                ready = false;
+            }
+        }
+
+        return ready;
+    }
 
     private void addTeamButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTeamButtonActionPerformed
 
@@ -1489,6 +1583,7 @@ public class TTScoreGUI1 extends javax.swing.JFrame {
 
         DefaultListModel<String> playerModel = new DefaultListModel<>();
 
+        //TODO: This probably could be in the team manager
         for(Team team : teamManager.getRegisteredTeams()){
             for(Player player : team.getTeamPlayers()){
                 playerModel.addElement(player.getName());
@@ -1550,7 +1645,7 @@ public class TTScoreGUI1 extends javax.swing.JFrame {
             dch.setText(sc.nextInt() + "");
             dca.setText(sc.nextInt() + "");
             sc.nextLine();
-// TODO add your handling code here:
+
         }//GEN-LAST:event_testScoreButtonActionPerformed
     }
 

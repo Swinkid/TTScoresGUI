@@ -10,6 +10,31 @@ public class Set {
         this.setGames = setGames;
     }
 
+
+    /**
+     * True: Home False: Away
+     */
+    public static boolean calculateWinningTeam(ArrayList<Game> games){
+
+        int homeScore = 0;
+        int awayScore = 0;
+
+        for(Game game : games){
+            if(game.getHomeScore() > game.getAwayScore()){
+                homeScore++;
+            } else {
+                awayScore++;
+            }
+        }
+
+        if(homeScore > awayScore){
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
     public int getHomeScore(){
         int homeScore = 0;
 
