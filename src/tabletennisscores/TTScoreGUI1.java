@@ -1445,7 +1445,7 @@ public class TTScoreGUI1 extends javax.swing.JFrame {
         DefaultListModel<String> teamModel = new DefaultListModel<>();
 
         for(Team team : teamManager.getRegisteredTeams()){
-            teamModel.addElement(team.getTeamName());
+            teamModel.addElement(team.getTeamName() + " Points: " + team.getTeamScore());
         }
 
         JList teamList = new JList<>(teamModel);

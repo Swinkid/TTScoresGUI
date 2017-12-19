@@ -13,9 +13,9 @@ public class Team {
     }
 
     /**
+     * newPlayer method adds a created player to the team.
      *
-     *
-     * @param player Instance of player to add
+     * @param player Instance of player to add to team
      */
     public void newPlayer(Player player){
         teamPlayers.add(player);
@@ -25,16 +25,9 @@ public class Team {
         return teamName;
     }
 
-    public void setTeamName(String teamName) {
-        this.teamName = teamName;
-    }
 
     public ArrayList<Player> getTeamPlayers() {
         return teamPlayers;
-    }
-
-    public void setTeamPlayers(ArrayList<Player> teamPlayers) {
-        this.teamPlayers = teamPlayers;
     }
 
     public int getTeamScore() {
