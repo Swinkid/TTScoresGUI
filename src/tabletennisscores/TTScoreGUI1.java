@@ -5,8 +5,12 @@
 package tabletennisscores;
 
 import tabletennisscores.Match.MatchManager;
+import tabletennisscores.Team.Player;
+import tabletennisscores.Team.Team;
 import tabletennisscores.Team.TeamManager;
 
+import javax.swing.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -21,7 +25,22 @@ public class TTScoreGUI1 extends javax.swing.JFrame {
      * Creates new form TTScoreGUI1
      */
     public TTScoreGUI1() {
+
+        /*teamManager.newTeam("filton");
+        teamManager.newTeam("uwe");
+
+        teamManager.getTeam("filton").newPlayer(new Player("alex"));
+        teamManager.getTeam("filton").newPlayer(new Player("brian"));
+
+        teamManager.getTeam("uwe").newPlayer(new Player("jin"));
+        teamManager.getTeam("uwe").newPlayer(new Player("julia"));*/
+
+
+
+
         initComponents();
+
+
     }
 
 
@@ -886,6 +905,7 @@ public class TTScoreGUI1 extends javax.swing.JFrame {
         });
 
         calScorebutton.setText("Calculate scores");
+        calScorebutton.setEnabled(false);
         calScorebutton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 calScorebuttonActionPerformed(evt);
@@ -927,6 +947,7 @@ public class TTScoreGUI1 extends javax.swing.JFrame {
         aWinTotal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         submitScoreButton.setText("Submit scores");
+        submitScoreButton.setEnabled(false);
         submitScoreButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 submitScoreButtonActionPerformed(evt);
@@ -1335,6 +1356,8 @@ public class TTScoreGUI1 extends javax.swing.JFrame {
     }//GEN-LAST:event_aPlayer1ActionPerformed
 
     private void calScorebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calScorebuttonActionPerformed
+        submitScoreButton.setEnabled(true);
+
         // TODO add your handling code here:
     }//GEN-LAST:event_calScorebuttonActionPerformed
 
@@ -1362,26 +1385,126 @@ public class TTScoreGUI1 extends javax.swing.JFrame {
 
     private void allTeamButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allTeamButtonActionPerformed
 
-// TODO add your handling code here:
+        DefaultListModel<String> teamModel = new DefaultListModel<>();
+
+        for(Team team : teamManager.getRegisteredTeams()){
+            teamModel.addElement(team.getTeamName());
+        }
+
+        JList teamList = new JList<>(teamModel);
+
+        final JComponent[] inputs = new JComponent[] {
+                new JLabel("Registered Teams"),
+                teamList
+        };
+
+        int result = JOptionPane.showConfirmDialog(null, inputs, "Registered Teams", JOptionPane.PLAIN_MESSAGE);
+
     }//GEN-LAST:event_allTeamButtonActionPerformed
 
     private void newMatchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newMatchButtonActionPerformed
+
+        calScorebutton.setEnabled(true);
 
         // TODO add your handling code here:
     }//GEN-LAST:event_newMatchButtonActionPerformed
 
     private void addTeamButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTeamButtonActionPerformed
 
+        JTextField teamName = new JTextField();
+
+        final JComponent[] inputs = new JComponent[] {
+                new JLabel("Team Name"),
+                teamName
+        };
+
+        int result = JOptionPane.showConfirmDialog(null, inputs, "Add Team", JOptionPane.PLAIN_MESSAGE);
+
+        if (result == JOptionPane.OK_OPTION) {
+
+            if(teamManager.getTeam(teamName.getText()) != null) {
+                JOptionPane.showMessageDialog(null, "Team already exists");
+            } else {
+
+                if(teamName.getText().equals("")){
+
+                    JOptionPane.showMessageDialog(null, "Team name cannot be blank");
+
+                } else {
+
+                    teamManager.newTeam(teamName.getText());
+                    JOptionPane.showMessageDialog(null, "Registered " + teamName.getText());
+
+                }
+
+            }
+
+        }
+
         // TODO add your handling code here:
     }//GEN-LAST:event_addTeamButtonActionPerformed
 
     private void regPlayerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regPlayerButtonActionPerformed
 
-        // TODO add your handling code here:
+        JTextField playerName = new JTextField();
+
+        String teamNames[] = new String[teamManager.getRegisteredTeams().size()];
+
+        int index = 0;
+
+        for (Team team : teamManager.getRegisteredTeams()){
+            teamNames[index] = team.getTeamName();
+            index++;
+        }
+
+        JComboBox selectTeam = new JComboBox(teamNames);
+
+        final JComponent[] inputs = new JComponent[] {
+                new JLabel("Player Name"),
+                playerName,
+                new JLabel("Team Name"),
+                selectTeam
+        };
+
+        int result = JOptionPane.showConfirmDialog(null, inputs, "Register Planer", JOptionPane.PLAIN_MESSAGE);
+
+        if (result == JOptionPane.OK_OPTION) {
+
+            if(playerName.getText().equals("") || selectTeam.getItemCount() == 0){
+
+                JOptionPane.showMessageDialog(null, "Team name cannot be blank");
+
+            } else {
+
+                teamManager.getTeam(selectTeam.getSelectedItem().toString()).newPlayer(new Player(playerName.getText()));
+                JOptionPane.showMessageDialog(null, playerName.getText() + " registered to team " + selectTeam.getSelectedItem().toString());
+
+            }
+
+        }
+
     }//GEN-LAST:event_regPlayerButtonActionPerformed
 
     private void allPlayerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allPlayerButtonActionPerformed
-        // TODO add your handling code here:
+
+        DefaultListModel<String> playerModel = new DefaultListModel<>();
+
+        for(Team team : teamManager.getRegisteredTeams()){
+            for(Player player : team.getTeamPlayers()){
+                playerModel.addElement(player.getName());
+            }
+        }
+
+        JList playerList = new JList<>(playerModel);
+
+
+        final JComponent[] inputs = new JComponent[] {
+                new JLabel("Registered Players"),
+                playerList
+        };
+
+        int result = JOptionPane.showConfirmDialog(null, inputs, "Registered Players", JOptionPane.PLAIN_MESSAGE);
+
     }//GEN-LAST:event_allPlayerButtonActionPerformed
 
     private void set11ahptsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_set11ahptsActionPerformed
@@ -1462,8 +1585,13 @@ public class TTScoreGUI1 extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new TTScoreGUI1().setVisible(true);
+
             }
         });
+
+
+
+
     }
     // Variables:
 

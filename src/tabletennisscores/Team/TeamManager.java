@@ -21,6 +21,10 @@ public class TeamManager {
         registeredTeams.remove(team);
     }
 
+    public ArrayList<Team> getRegisteredTeams() {
+        return registeredTeams;
+    }
+
     public Team getTeam(String teamName){
         for(Team team : registeredTeams){
             if(team.getTeamName().equals(teamName)){
