@@ -13,11 +13,24 @@ public class MatchManager {
         return ourInstance;
     }
 
-    public static Match getMatch(Team homeTeam, Team awayTeam){
+    public Match getMatch(Team homeTeam, Team awayTeam){
+
+        for (Match match : matches){
+            if(match.getHomeTeam().getTeamName().equals(homeTeam) && match.getAwayTeam().getTeamName().equals(awayTeam)){
+                return match;
+            }
+        }
+
         return null;
     }
 
     public void addMatch(Match match){
+        Team homeTeam = match.getHomeTeam();
+        Team awayTeam = match.getAwayTeam();
+
+        homeTeam.setTeamScore(homeTeam.getTeamScore() + match.getHomeScore());
+        awayTeam.setTeamScore(awayTeam.getTeamScore() + match.getAwayScore());
+
         matches.add(match);
     }
 

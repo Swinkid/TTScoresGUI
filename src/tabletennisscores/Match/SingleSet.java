@@ -15,4 +15,11 @@ public class SingleSet extends Set {
         this.homePlayer = homePlayer;
         this.awayPlayer = awayPlayer;
     }
+
+    public SingleSet(Game[] setGames, Player homePlayer, Player awayPlayer){
+        super(setGames);
+
+        this.homePlayer = homePlayer;
+        this.awayPlayer = awayPlayer;
+    }
 }

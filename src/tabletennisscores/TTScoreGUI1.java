@@ -22,20 +22,24 @@ public class TTScoreGUI1 extends javax.swing.JFrame {
     private MatchManager matchManager = MatchManager.getInstance();
 
     private Match currentMatch;
+    private Player homePlayers[];
+    private Player awayPlayers[];
 
     /**
      * Creates new form TTScoreGUI1
      */
     public TTScoreGUI1() {
 
-        /*teamManager.newTeam("filton");
+
+        //TODO: REMOVE BEFORE SUBMISSION
         teamManager.newTeam("uwe");
+        teamManager.newTeam("filton");
 
         teamManager.getTeam("filton").newPlayer(new Player("alex"));
         teamManager.getTeam("filton").newPlayer(new Player("brian"));
 
         teamManager.getTeam("uwe").newPlayer(new Player("jin"));
-        teamManager.getTeam("uwe").newPlayer(new Player("julia"));*/
+        teamManager.getTeam("uwe").newPlayer(new Player("julia"));
 
 
 
@@ -1359,82 +1363,53 @@ public class TTScoreGUI1 extends javax.swing.JFrame {
 
     private void calScorebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calScorebuttonActionPerformed
 
-        currentMatch = new Match(teamManager.getTeam(hTeamField.getText()), teamManager.getTeam(aTeamField.getText()));
+        currentMatch.addSet(new SingleSet(new Game[]{
+                new Game(Integer.valueOf(set11ahpts.getText()), Integer.valueOf(set11aapts.getText())),
+                new Game(Integer.valueOf(set11bhpts.getText()), Integer.valueOf(set11bapts.getText())),
+                new Game(Integer.valueOf(set11chpts.getText()), Integer.valueOf(set11capts.getText()))
+        }, homePlayers[0], awayPlayers[0]));
 
-        Player homePlayer1 = teamManager.getTeam(hTeamField.getText()).findPlayer(hPlayer1.getText());
-        Player homePlayer2 = teamManager.getTeam(hTeamField.getText()).findPlayer(hPlayer2.getText());
+        currentMatch.addSet(new SingleSet(new Game[]{
+                new Game(Integer.valueOf(set12ahpts.getText()),Integer.valueOf(set12aapts.getText())),
+                new Game(Integer.valueOf(set12bhpts.getText()),Integer.valueOf(set12bapts.getText())),
+                new Game(Integer.valueOf(set12chpts.getText()),Integer.valueOf(set12capts.getText()))
+        }, homePlayers[0], awayPlayers[1]));
 
-        Player awayPlayer1 = teamManager.getTeam(aTeamField.getText()).findPlayer(aPlayer1.getText());
-        Player awayPlayer2 = teamManager.getTeam(aTeamField.getText()).findPlayer(aPlayer2.getText());
+        currentMatch.addSet(new SingleSet(new Game[]{
+                new Game(Integer.valueOf(set21ahpts.getText()),Integer.valueOf(set21aapts.getText())),
+                new Game(Integer.valueOf(set21bhpts.getText()),Integer.valueOf(set21bapts.getText())),
+                new Game(Integer.valueOf(set21chpts.getText()),Integer.valueOf(set21capts.getText()))
+        }, homePlayers[1], awayPlayers[0]));
 
+        currentMatch.addSet(new SingleSet(new Game[]{
+                new Game(Integer.valueOf(set22ahpts.getText()),Integer.valueOf(set22aapts.getText())),
+                new Game(Integer.valueOf(set22bhpts.getText()),Integer.valueOf(set22bapts.getText())),
+                new Game(Integer.valueOf(set22chpts.getText()),Integer.valueOf(set22capts.getText()))
+        }, homePlayers[1], awayPlayers[1]));
 
-        int row1Home = 0;
-        int row1Away = 0;
-
-        ArrayList<Game> setGames1 = new ArrayList<>();
-        setGames1.add(new Game(Integer.valueOf(set11ahpts.getText()), Integer.valueOf(set11aapts.getText())));
-        setGames1.add(new Game(Integer.valueOf(set11bhpts.getText()), Integer.valueOf(set11bapts.getText())));
-        setGames1.add(new Game(Integer.valueOf(set11chpts.getText()), Integer.valueOf(set11capts.getText())));
-        SingleSet set1 = new SingleSet(setGames1, homePlayer1, awayPlayer1);
-        currentMatch.addSet(set1);
-
-        if(set1.getHomeScore() > set1.getAwayScore()){
-            row1Home++;
-        } else {
-            row1Away++;
-        }
-
-        ArrayList<Game> setGames2 = new ArrayList<>();
-        setGames2.add(new Game(Integer.valueOf(set12ahpts.getText()),Integer.valueOf(set12aapts.getText())));
-        setGames2.add(new Game(Integer.valueOf(set12bhpts.getText()),Integer.valueOf(set12bapts.getText())));
-        setGames2.add(new Game(Integer.valueOf(set12chpts.getText()),Integer.valueOf(set12capts.getText())));
-        SingleSet set2 = new SingleSet(setGames2, homePlayer1, awayPlayer2);
-        currentMatch.addSet(set2);
-
-        if(set2.getHomeScore() > set2.getAwayScore()){
-            row1Home++;
-        } else {
-            row1Away++;
-        }
-
-        hWinRow1.setText(String.valueOf(row1Home));
-        aWinRow1.setText(String.valueOf(row1Away));
+        currentMatch.addSet(new DoubleSet(new Game[]{
+                new Game(Integer.valueOf(dah.getText()), Integer.valueOf(daa.getText())),
+                new Game(Integer.valueOf(dbh.getText()), Integer.valueOf(dba.getText())),
+                new Game(Integer.valueOf(dch.getText()), Integer.valueOf(dca.getText()))
+        }, homePlayers, awayPlayers));
 
 
+        hWinRow1.setText(String.valueOf(currentMatch.getScore(new int[]{0, 1})[0]));
+        aWinRow1.setText(String.valueOf(currentMatch.getScore(new int[]{0, 1})[1]));
 
+        hWinRow2.setText(String.valueOf(currentMatch.getScore(new int[]{2, 3})[0]));
+        aWinRow2.setText(String.valueOf(currentMatch.getScore(new int[]{2, 3})[1]));
 
-        ArrayList<Game> set3 = new ArrayList<>();
-        set3.add(new Game(Integer.valueOf(set21ahpts.getText()),Integer.valueOf(set21aapts.getText())));
-        set3.add(new Game(Integer.valueOf(set21bhpts.getText()),Integer.valueOf(set21bapts.getText())));
-        set3.add(new Game(Integer.valueOf(set21chpts.getText()),Integer.valueOf(set21capts.getText())));
-        currentMatch.addSet(new SingleSet(set3, homePlayer2, awayPlayer1));
+        doubleHWin.setText(String.valueOf(currentMatch.getScore(4)[0]));
+        doubleAWin.setText(String.valueOf(currentMatch.getScore(4)[1]));
 
-        ArrayList<Game> set4 = new ArrayList<>();
-        set4.add(new Game(Integer.valueOf(set22ahpts.getText()),Integer.valueOf(set22aapts.getText())));
-        set4.add(new Game(Integer.valueOf(set22bhpts.getText()),Integer.valueOf(set22bapts.getText())));
-        set4.add(new Game(Integer.valueOf(set22chpts.getText()),Integer.valueOf(set22capts.getText())));
-        currentMatch.addSet(new SingleSet(set4, homePlayer2, awayPlayer2));
+        hWinTotal.setText(String.valueOf(currentMatch.getScore(new int[]{0, 1, 2, 3, 4})[0]));
+        aWinTotal.setText(String.valueOf(currentMatch.getScore(new int[]{0, 1, 2, 3, 4})[1]));
 
-
-
-
-
-
-        //Game gameda = new Game(Integer.valueOf(dah.getText()), Integer.valueOf(daa.getText()));
-        //Game gamedb = new Game(Integer.valueOf(dbh.getText()), Integer.valueOf(dba.getText()));
-        //Game gamedc = new Game(Integer.valueOf(dch.getText()), Integer.valueOf(dca.getText()));
-
-
-
-
-
-        //TODO: Do in submit
-        //currentMatch.addSet(new SingleSet(game1, homePlayer1, awayPlayer1));
-
-
+        currentMatch.setHomeScore(currentMatch.getScore(new int[]{0, 1, 2, 3, 4})[0]);
+        currentMatch.setAwayScore(currentMatch.getScore(new int[]{0, 1, 2, 3, 4})[1]);
 
         submitScoreButton.setEnabled(true);
-        // TODO add your handling code here:
     }//GEN-LAST:event_calScorebuttonActionPerformed
 
     private void set22chptsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_set22chptsActionPerformed
@@ -1449,6 +1424,7 @@ public class TTScoreGUI1 extends javax.swing.JFrame {
         submitScoreButton.setEnabled(false);
         calScorebutton.setEnabled(false);
         matchManager.addMatch(currentMatch);
+        JOptionPane.showMessageDialog(null, "Scores Submitted");
     }//GEN-LAST:event_submitScoreButtonActionPerformed
 
     private void viewMatchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewMatchButtonActionPerformed
@@ -1457,10 +1433,14 @@ public class TTScoreGUI1 extends javax.swing.JFrame {
 
     private void teamTankingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teamTankingButtonActionPerformed
 
+        teamManager.listTeamRanking();
+
         // TODO add your handling code here:
     }//GEN-LAST:event_teamTankingButtonActionPerformed
 
     private void allTeamButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allTeamButtonActionPerformed
+
+        teamManager.listTeams();
 
         DefaultListModel<String> teamModel = new DefaultListModel<>();
 
@@ -1483,6 +1463,19 @@ public class TTScoreGUI1 extends javax.swing.JFrame {
 
         if(isTeamValid(hTeamField.getText(), hPlayer1.getText(), hPlayer2.getText()) && isTeamValid(aTeamField.getText(), aPlayer1.getText(), aPlayer2.getText())){
             calScorebutton.setEnabled(true);
+
+            currentMatch = new Match(teamManager.getTeam(hTeamField.getText()), teamManager.getTeam(aTeamField.getText()));
+
+            homePlayers = new Player[]{
+                    teamManager.getTeam(hTeamField.getText()).findPlayer(hPlayer1.getText()),
+                    teamManager.getTeam(hTeamField.getText()).findPlayer(hPlayer2.getText())
+            };
+
+            awayPlayers = new Player[]{
+                    teamManager.getTeam(aTeamField.getText()).findPlayer(aPlayer1.getText()),
+                    teamManager.getTeam(aTeamField.getText()).findPlayer(aPlayer2.getText())
+            };
+
         } else {
             JOptionPane.showMessageDialog(null, "Invalid Player");
         }

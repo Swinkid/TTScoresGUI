@@ -1,6 +1,8 @@
 package tabletennisscores.Team;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class TeamManager {
     private static TeamManager ourInstance = new TeamManager();
@@ -45,6 +47,21 @@ public class TeamManager {
         }
 
         return null;
+    }
+
+    public void listTeams(){
+        for(Team team : registeredTeams){
+            System.out.println(team.toString());
+        }
+    }
+
+    public void listTeamRanking(){
+        ArrayList<Team> sortedTeams = new ArrayList<>(registeredTeams);
+        sortedTeams.sort(Comparator.comparingInt(Team::getTeamScore).reversed());
+
+        for(Team team : sortedTeams){
+            System.out.println(team.toString());
+        }
     }
 
 }

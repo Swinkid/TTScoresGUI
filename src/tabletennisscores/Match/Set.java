@@ -1,38 +1,35 @@
 package tabletennisscores.Match;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Set {
 
-    private ArrayList<Game> setGames = new ArrayList<Game>();
+    protected ArrayList<Game> setGames = new ArrayList<Game>();
 
     public Set(ArrayList<Game> setGames) {
         this.setGames = setGames;
     }
 
+    public Set(Game[] games){
+        setGames.addAll(Arrays.asList(games));
+    }
 
-    /**
-     * True: Home False: Away
-     */
-    public static boolean calculateWinningTeam(ArrayList<Game> games){
+    public int[] getScore(){
+        int score[] = new int[] {
+                0,
+                0,
+        };
 
-        int homeScore = 0;
-        int awayScore = 0;
-
-        for(Game game : games){
+        for(Game game : setGames){
             if(game.getHomeScore() > game.getAwayScore()){
-                homeScore++;
+                score[0]++;
             } else {
-                awayScore++;
+                score[1]++;
             }
         }
 
-        if(homeScore > awayScore){
-            return true;
-        } else {
-            return false;
-        }
-
+        return score;
     }
 
     public int getHomeScore(){

@@ -6,6 +6,7 @@ public class Team {
 
     private String teamName;
     private ArrayList<Player> teamPlayers = new ArrayList<Player>();
+    private int teamScore = 0;
 
     public Team(String teamName) {
         this.teamName = teamName;
@@ -36,6 +37,14 @@ public class Team {
         this.teamPlayers = teamPlayers;
     }
 
+    public int getTeamScore() {
+        return teamScore;
+    }
+
+    public void setTeamScore(int teamScore) {
+        this.teamScore = teamScore;
+    }
+
     /**
      * Get a player instance from within the team. Can be used to check if player is in team.
      *
@@ -50,5 +59,13 @@ public class Team {
         }
 
         return null;
+    }
+
+    @Override
+    public String toString() {
+        return "Team {" +
+                "teamName='" + teamName + '\'' +
+                ", teamScore=" + teamScore +
+                '}';
     }
 }
