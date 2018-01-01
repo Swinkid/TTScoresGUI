@@ -1,11 +1,15 @@
 package tabletennisscores.Match;
 
+import tabletennisscores.Team.Player;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Set {
 
     protected ArrayList<Game> setGames = new ArrayList<Game>();
+    protected Player homePlayer;
+    protected Player awayPlayer;
 
     public Set(ArrayList<Game> setGames) {
         this.setGames = setGames;
@@ -50,5 +54,9 @@ public class Set {
         }
 
         return awayScore;
+    }
+
+    public ArrayList<Game> getGames(){
+        return this.setGames;
     }
 }

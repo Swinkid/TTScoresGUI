@@ -4,6 +4,7 @@ public class Player {
 
     private String playerName;
     private int setsWon = 0;
+    private int setsPlayed = 0;
 
     public Player(String name) {
         this.playerName = name;
@@ -23,6 +24,14 @@ public class Player {
 
     public void setSetsWon(int setsWon) {
         this.setsWon = setsWon;
+    }
+
+    public int getSetsPlayed() {
+        return setsPlayed;
+    }
+
+    public void setSetsPlayed(int setsPlayed) {
+        this.setsPlayed = setsPlayed;
     }
 }
 

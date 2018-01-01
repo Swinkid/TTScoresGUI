@@ -12,7 +12,7 @@ public class Match {
     private int homeScore;
     private int awayScore;
 
-    private ArrayList<Set> matchSets = new ArrayList<Set>();
+    private ArrayList<Set> matchSets = new ArrayList<>();
 
     public Match(Team homeTeam, Team awayTeam) {
         this.homeTeam = homeTeam;

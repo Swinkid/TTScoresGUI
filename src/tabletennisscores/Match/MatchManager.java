@@ -1,5 +1,6 @@
 package tabletennisscores.Match;
 
+import tabletennisscores.Team.Player;
 import tabletennisscores.Team.Team;
 
 import java.util.ArrayList;
@@ -30,6 +31,8 @@ public class MatchManager {
 
         homeTeam.setTeamScore(homeTeam.getTeamScore() + match.getHomeScore());
         awayTeam.setTeamScore(awayTeam.getTeamScore() + match.getAwayScore());
+
+        ArrayList<Set> sets = match.getSets();
 
         matches.add(match);
     }

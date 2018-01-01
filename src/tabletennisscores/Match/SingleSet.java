@@ -6,20 +6,17 @@ import java.util.ArrayList;
 
 public class SingleSet extends Set {
 
-    private Player homePlayer;
-    private Player awayPlayer;
-
     public SingleSet(ArrayList<Game> setGames, Player homePlayer, Player awayPlayer) {
         super(setGames);
 
-        this.homePlayer = homePlayer;
-        this.awayPlayer = awayPlayer;
+        super.homePlayer = homePlayer;
+        super.awayPlayer = awayPlayer;
     }
 
     public SingleSet(Game[] setGames, Player homePlayer, Player awayPlayer){
         super(setGames);
 
-        this.homePlayer = homePlayer;
-        this.awayPlayer = awayPlayer;
+        super.homePlayer = homePlayer;
+        super.awayPlayer = awayPlayer;
     }
 }
