@@ -11,11 +11,11 @@ import java.util.Comparator;
  * @author Alex Noble
  */
 public class TeamManager {
-    private static TeamManager ourInstance = new TeamManager();
+    private static TeamManager instance = new TeamManager();
     private ArrayList<Team> registeredTeams = new ArrayList<Team>();
 
     public static TeamManager getInstance() {
-        return ourInstance;
+        return instance;
     }
 
     /**
@@ -101,4 +101,18 @@ public class TeamManager {
         }
     }
 
+
+    public boolean isTeamValid(String team, String playerA, String playerB){
+        boolean ready = true;
+
+        if(!(this.isTeamRegistered(team))){
+            ready = false;
+        } else {
+            if(this.getTeam(team).findPlayer(playerA).equals(null) && this.getTeam(team).findPlayer(playerB).equals(null)){
+                ready = false;
+            }
+        }
+
+        return ready;
+    }
 }

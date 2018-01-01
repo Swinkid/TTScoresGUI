@@ -1461,7 +1461,7 @@ public class TTScoreGUI1 extends javax.swing.JFrame {
 
     private void newMatchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newMatchButtonActionPerformed
 
-        if(isTeamValid(hTeamField.getText(), hPlayer1.getText(), hPlayer2.getText()) && isTeamValid(aTeamField.getText(), aPlayer1.getText(), aPlayer2.getText())){
+        if(teamManager.isTeamValid(hTeamField.getText(), hPlayer1.getText(), hPlayer2.getText()) && teamManager.isTeamValid(aTeamField.getText(), aPlayer1.getText(), aPlayer2.getText())){
             calScorebutton.setEnabled(true);
 
             currentMatch = new Match(teamManager.getTeam(hTeamField.getText()), teamManager.getTeam(aTeamField.getText()));
@@ -1482,19 +1482,7 @@ public class TTScoreGUI1 extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_newMatchButtonActionPerformed
 
-    private boolean isTeamValid(String team, String playerA, String playerB){
-        boolean ready = true;
 
-        if(!(teamManager.isTeamRegistered(team))){
-            ready = false;
-        } else {
-            if(teamManager.getTeam(team).findPlayer(playerA).equals(null) && teamManager.getTeam(team).findPlayer(playerB).equals(null)){
-                ready = false;
-            }
-        }
-
-        return ready;
-    }
 
     private void addTeamButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTeamButtonActionPerformed
 
