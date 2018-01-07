@@ -5,7 +5,7 @@ import tabletennisscores.Team.Player;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Set {
+public abstract class Set {
 
     protected ArrayList<Game> setGames = new ArrayList<Game>();
     protected Player homePlayer;
@@ -19,6 +19,10 @@ public class Set {
         setGames.addAll(Arrays.asList(games));
     }
 
+    /**
+     * Gets the score of the current set.
+     * @return Array of score. (Home [0], Away [1])
+     */
     public int[] getScore(){
         int score[] = new int[] {
                 0,
