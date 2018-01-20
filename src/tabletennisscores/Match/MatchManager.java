@@ -17,12 +17,16 @@ public class MatchManager {
     public Match getMatch(Team homeTeam, Team awayTeam){
 
         for (Match match : matches){
-            if(match.getHomeTeam().getTeamName().equals(homeTeam) && match.getAwayTeam().getTeamName().equals(awayTeam)){
+            if(match.getHomeTeam().getTeamName().equals(homeTeam.getTeamName()) && match.getAwayTeam().getTeamName().equals(awayTeam.getTeamName())){
                 return match;
             }
         }
 
         return null;
+    }
+    
+    public ArrayList<Match> getMatches(){
+        return this.matches;
     }
 
     public void addMatch(Match match){
@@ -35,6 +39,9 @@ public class MatchManager {
         ArrayList<Set> sets = match.getSets();
 
         matches.add(match);
+    }
+    public void getMatchScore(Team homeTeam, Team awayTeam) {
+        this.getMatch(homeTeam, awayTeam).toString();
     }
 
     private MatchManager() {

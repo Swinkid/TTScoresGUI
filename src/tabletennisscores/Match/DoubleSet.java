@@ -39,4 +39,31 @@ public class DoubleSet extends Set {
         return score;
     }
 
+        @Override
+    public String toString() {
+        
+        String string = "SetScore { ";
+        
+        string += "homePlayers=";
+        for(Player player : homePlayers){
+            string += player.getName() + ",";
+        }
+        
+        string += " awayPlayers=";
+        for(Player player : awayPlayers){
+            string += player.getName() + ",";
+        }
+        
+        string += "\n";
+        for(Game game : setGames){
+            
+            string += game.toString() + "\n";
+            
+        }
+        
+        string += "}";
+        
+        return string;
+    }
+    
 }

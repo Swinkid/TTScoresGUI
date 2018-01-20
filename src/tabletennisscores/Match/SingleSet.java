@@ -19,4 +19,20 @@ public class SingleSet extends Set {
         super.homePlayer = homePlayer;
         super.awayPlayer = awayPlayer;
     }
+    
+    @Override
+    public String toString() {
+        
+        String string = "SetScore { homePlayer=" + homePlayer.getName() + " awayPlayer=" + awayPlayer.getName() + "\n";
+        
+        for(Game game : setGames){
+            
+            string += game.toString() + "\n";
+            
+        }
+        
+        string += "}";
+        
+        return string;
+    }
 }

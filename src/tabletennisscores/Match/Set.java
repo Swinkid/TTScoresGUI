@@ -63,4 +63,20 @@ public abstract class Set {
     public ArrayList<Game> getGames(){
         return this.setGames;
     }
+
+    @Override
+    public String toString() {
+        
+        String string = "SetScore { ";
+        
+        for(Game game : setGames){
+            
+            string += game.toString() + "\n";
+            
+        }
+        
+        string += "}";
+        
+        return string;
+    }
 }

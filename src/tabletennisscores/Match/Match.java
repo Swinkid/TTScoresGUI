@@ -87,4 +87,21 @@ public class Match {
     public void setAwayScore(int awayScore) {
         this.awayScore = awayScore;
     }
+
+    @Override
+    public String toString() {
+        
+        String string = "Match score " + homeTeam.getTeamName() + " VS " + awayTeam.getTeamName() + "\n";
+        
+        for(Set s : matchSets){
+            
+            string += s.toString() + "\n";
+            
+        }
+        
+        
+        return string;
+    }
+    
+    
 }

@@ -1428,7 +1428,54 @@ public class TTScoreGUI1 extends javax.swing.JFrame {
     }//GEN-LAST:event_submitScoreButtonActionPerformed
 
     private void viewMatchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewMatchButtonActionPerformed
+        
+        String teamNames[] = new String[teamManager.getRegisteredTeams().size()];
+      
+        int index = 0;
+        for (Team team : teamManager.getRegisteredTeams()){
+            teamNames[index] = team.getTeamName();
+            index++;
+        }
+        
+        JComboBox homeTeam = new JComboBox(teamNames);
+        JComboBox awayTeam = new JComboBox(teamNames);
+        
+        final JComponent[] inputs = new JComponent[] {
+                new JLabel("Home"),
+                homeTeam,
+                new JLabel("Away"),
+                awayTeam
+        };
+        
+        int result = JOptionPane.showConfirmDialog(null, inputs, "View Match", JOptionPane.PLAIN_MESSAGE);
+        
+        if (result == JOptionPane.OK_OPTION) {
 
+            if(homeTeam.getSelectedItem().toString().equals(awayTeam.getSelectedItem().toString())){
+                JOptionPane.showMessageDialog(null, "Team cannot play itself");
+            } else {
+                
+                Match match = matchManager.getMatch(teamManager.getTeam(homeTeam.getSelectedItem().toString()), teamManager.getTeam(awayTeam.getSelectedItem().toString()));
+                
+                if(match == null){
+                    JOptionPane.showMessageDialog(null, "Please enter a valid match");
+                } else {
+                    
+                    System.out.println(match.toString());
+                    
+                }
+                
+            }
+            
+           
+
+                //teamManager.getTeam(selectTeam.getSelectedItem().toString()).newPlayer(new Player(playerName.getText()));
+                //JOptionPane.showMessageDialog(null, playerName.getText() + " registered to team " + selectTeam.getSelectedItem().toString());
+
+            
+
+        }
+        
     }//GEN-LAST:event_viewMatchButtonActionPerformed
 
     private void teamTankingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teamTankingButtonActionPerformed
